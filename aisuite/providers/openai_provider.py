@@ -123,14 +123,17 @@ class OpenAIAudio(Audio):
 
                 # Use the model name directly (client already extracted it)
                 model_name = model
-                
+
                 # Try real streaming with OpenAI API
                 api_params["stream"] = True
 
                 # Handle timestamp_granularities requirement
                 if "timestamp_granularities" in api_params:
                     # OpenAI requires verbose_json format for timestamp_granularities
-                    if "response_format" in api_params and api_params["response_format"] != "verbose_json":
+                    if (
+                        "response_format" in api_params
+                        and api_params["response_format"] != "verbose_json"
+                    ):
                         raise ASRError(
                             f"OpenAI timestamp_granularities requires response_format='verbose_json', "
                             f"but got '{api_params['response_format']}'. "
@@ -141,7 +144,6 @@ class OpenAIAudio(Audio):
                         api_params["response_format"] = "verbose_json"
 
                 try:
-                    
                     if isinstance(file, str):
                         with open(file, "rb") as audio_file:
                             response_stream = self.client.audio.transcriptions.create(
@@ -155,22 +157,22 @@ class OpenAIAudio(Audio):
                     # Process streaming response - handle new event types
                     for event in response_stream:
                         # Handle TranscriptionTextDeltaEvent (incremental text)
-                        if hasattr(event, 'type') and event.type == 'transcript.text.delta':
-                            if hasattr(event, 'delta') and event.delta:
+                        if hasattr(event, "type") and event.type == "transcript.text.delta":
+                            if hasattr(event, "delta") and event.delta:
                                 yield StreamingTranscriptionChunk(
                                     text=event.delta,
                                     is_final=False,  # Delta events are interim
                                     confidence=getattr(event, "confidence", None),
                                 )
                         # Handle TranscriptionTextDoneEvent (final complete text)
-                        elif hasattr(event, 'type') and event.type == 'transcript.text.done':
-                            if hasattr(event, 'text') and event.text:
+                        elif hasattr(event, "type") and event.type == "transcript.text.done":
+                            if hasattr(event, "text") and event.text:
                                 yield StreamingTranscriptionChunk(
                                     text=event.text,
                                     is_final=True,  # Done event is final
                                     confidence=getattr(event, "confidence", None),
                                 )
-                        
+
                 except Exception as stream_error:
                     raise ASRError(f"OpenAI streaming transcription error: {stream_error}")
 
