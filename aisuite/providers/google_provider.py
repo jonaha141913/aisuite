@@ -514,7 +514,7 @@ class GoogleAudio(Audio):
                 google_params["language"] = openai_params["language"]
             if "prompt" in openai_params:
                 google_params["speech_contexts"] = [
-                    {"phrases": [openai_params["prompt"]]}
+                    {"phrases": [openai_params["prompt"]]},
                 ]
             if "timestamp_granularities" in openai_params:
                 granularities = openai_params["timestamp_granularities"]
@@ -552,8 +552,8 @@ class GoogleAudio(Audio):
                             else 0.0
                         ),
                         confidence=getattr(word, "confidence", None),
-                    )
-                    for word in best_alternative.words
+                    ),
+                    for word in best_alternative.words,
                 ]
 
             alternatives = [
@@ -561,7 +561,7 @@ class GoogleAudio(Audio):
                     transcript=alt.transcript,
                     confidence=getattr(alt, "confidence", None),
                 )
-                for alt in best_result.alternatives
+                for alt in best_result.alternatives,
             ]
 
             segments = []
@@ -578,7 +578,7 @@ class GoogleAudio(Audio):
                         avg_logprob=0.0,
                         compression_ratio=0.0,
                         no_speech_prob=0.0,
-                    )
+                    ),
                 ]
 
             return TranscriptionResult(
