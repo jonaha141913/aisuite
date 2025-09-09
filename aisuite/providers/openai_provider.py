@@ -123,7 +123,7 @@ class OpenAIAudio(Audio):
 
                 # Use the model name directly (client already extracted it)
                 model_name = model
-                
+
                 # Try real streaming with OpenAI API
                 api_params["stream"] = True
 
@@ -141,7 +141,6 @@ class OpenAIAudio(Audio):
                         api_params["response_format"] = "verbose_json"
 
                 try:
-                    
                     if isinstance(file, str):
                         with open(file, "rb") as audio_file:
                             response_stream = self.client.audio.transcriptions.create(
@@ -170,7 +169,7 @@ class OpenAIAudio(Audio):
                                     is_final=True,  # Done event is final
                                     confidence=getattr(event, "confidence", None),
                                 )
-                        
+
                 except Exception as stream_error:
                     raise ASRError(f"OpenAI streaming transcription error: {stream_error}")
 
