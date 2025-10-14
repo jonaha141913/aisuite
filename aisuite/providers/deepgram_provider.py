@@ -81,13 +81,50 @@ class DeepgramAudio(Audio):
             This is a simple pass-through to the Deepgram API.
             """
             try:
+                import inspect
+
                 from deepgram import PrerecordedOptions
+
+                # Expand a TranscriptionOptions object (if provided) into
+                # Deepgram-native parameters. Explicit kwargs take precedence.
+                options = kwargs.pop("options", None)
+                if options is not None:
+                    if hasattr(options, "to_deepgram_params"):
+                        option_params = options.to_deepgram_params() or {}
+                    elif hasattr(options, "model_dump"):
+                        option_params = options.model_dump(exclude_none=True)
+                    elif hasattr(options, "dict") and callable(options.dict):
+                        option_params = options.dict(exclude_none=True)
+                    elif isinstance(options, dict):
+                        option_params = dict(options)
+                    else:
+                        option_params = {
+                            k: v
+                            for k, v in vars(options).items()
+                            if not k.startswith("_")
+                        }
+
+                    for key, value in option_params.items():
+                        if value is not None:
+                            kwargs.setdefault(key, value)
 
                 # Add model to params and set defaults
                 kwargs["model"] = model
                 kwargs.setdefault("smart_format", True)
                 kwargs.setdefault("punctuate", True)
                 kwargs.setdefault("language", "en")
+
+                # Keep only parameters PrerecordedOptions accepts
+                try:
+                    sig_params = inspect.signature(PrerecordedOptions).parameters
+                    accepts_var_kw = any(
+                        p.kind == inspect.Parameter.VAR_KEYWORD
+                        for p in sig_params.values()
+                    )
+                    if not accepts_var_kw:
+                        kwargs = {k: v for k, v in kwargs.items() if k in sig_params}
+                except (TypeError, ValueError):
+                    pass
 
                 deepgram_options = PrerecordedOptions(**kwargs)
                 payload = self._prepare_audio_payload(file)

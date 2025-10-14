@@ -137,7 +137,11 @@ class TestOpenAIASR:
 
             mock_create.assert_called_once()
             call_kwargs = mock_create.call_args.kwargs
-            assert "language" in call_kwargs
+            if "language" in call_kwargs:
+                assert call_kwargs["language"] == "en"
+            else:
+                assert "options" in call_kwargs
+                assert call_kwargs["options"].language == "en"
             assert isinstance(result, TranscriptionResult)
             assert result.text == "Hello, this is a test transcription."
 

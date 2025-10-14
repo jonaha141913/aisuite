@@ -350,7 +350,7 @@ class Transcriptions:
         supported_providers = ProviderFactory.get_supported_providers()
         if provider_key not in supported_providers:
             raise ValueError(
-                f"Invalid provider key '{provider_key}'. "
+                f"Provider '{provider_key}' is not available. "
                 f"Supported providers: {supported_providers}"
             )
 
