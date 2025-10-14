@@ -89,7 +89,37 @@ class DeepgramAudio(Audio):
                 kwargs.setdefault("punctuate", True)
                 kwargs.setdefault("language", "en")
 
-                deepgram_options = PrerecordedOptions(**kwargs)
+                # Filter kwargs to only include valid PrerecordedOptions parameters
+                valid_options = {
+                    "model",
+                    "smart_format",
+                    "punctuate",
+                    "language",
+                    "utterances",
+                    "utterance_split",
+                    "keywords",
+                    "tag",
+                    "detect_topics",
+                    "redact",
+                    "replace",
+                    "search",
+                    "diarize",
+                    "nlu_analysis",
+                    "summarize",
+                    "topics",
+                    "intent",
+                    "multireturn",
+                    "channel_id",
+                    "tier",
+                    "profanity_filter",
+                    "content_safety",
+                    "speech_sensitivity",
+                    "audio_transcript",
+                    "extra",
+                }
+                filtered_kwargs = {k: v for k, v in kwargs.items() if k in valid_options}
+
+                deepgram_options = PrerecordedOptions(**filtered_kwargs)
                 payload = self._prepare_audio_payload(file)
 
                 response = self.client.listen.rest.v("1").transcribe_file(

@@ -131,7 +131,7 @@ class TestDeepgramProvider:
             return_value=MagicMock(to_dict=lambda: mock_deepgram_response),
         ) as mock_transcribe:
             result = deepgram_provider.audio.transcriptions.create(
-                model="deepgram:nova-2", file="test_audio.mp3", options=options
+                model="deepgram:nova-2", file="test_audio.mp3", **options.to_dict()
             )
 
             mock_transcribe.assert_called_once()
