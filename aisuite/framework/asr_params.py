@@ -161,7 +161,9 @@ class ParamValidator:
         self.extra_param_mode = extra_param_mode
 
     def validate_and_map(
-        self, provider_key: str, params: Dict[str, Any]
+        self,
+        provider_key: str,
+        params: Dict[str, Any],
     ) -> Dict[str, Any]:
         """
         Validate and map parameters for the given provider.
@@ -256,7 +258,9 @@ class ParamValidator:
 
         return value
 
-    def _handle_unknown(self, provider_key: str, unknown_params: list):
+    def _handle_unknown(
+        self, provider_key: str, unknown_params: list
+    ):
         """
         Handle unknown parameters based on extra_param_mode.
 

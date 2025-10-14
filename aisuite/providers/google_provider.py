@@ -227,7 +227,12 @@ class GoogleProvider(Provider):
         # Initialize audio functionality
         self.audio = GoogleAudio(self)
 
-    def chat_completions_create(self, model, messages, **kwargs):
+    def chat_completions_create(
+        self,
+        model,
+        messages,
+        **kwargs,
+    ):
         """Request chat completions from the Google AI API.
 
         Args:
@@ -461,7 +466,10 @@ class GoogleAudio(Audio):
             return speech.RecognitionConfig.AudioEncoding.LINEAR16
 
         def _build_recognition_config(
-            self, params: dict, speech, file: Union[str, BinaryIO]
+            self,
+            params: dict,
+            speech,
+            file: Union[str, BinaryIO],
         ):
             """Build Google Speech RecognitionConfig from parameters."""
             # Auto-detect encoding if not specified
@@ -488,7 +496,10 @@ class GoogleAudio(Audio):
             return speech.RecognitionConfig(**config_params)
 
         def _create_streaming_requests(
-            self, speech, streaming_config, audio_data: bytes
+            self,
+            speech,
+            streaming_config,
+            audio_data: bytes,
         ):
             """Create streaming requests generator for Google Speech API."""
 
