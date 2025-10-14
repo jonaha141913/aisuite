@@ -89,6 +89,10 @@ class DeepgramAudio(Audio):
                 kwargs.setdefault("punctuate", True)
                 kwargs.setdefault("language", "en")
 
+                # PrerecordedOptions expects keyword arguments directly, not nested under 'options'
+                # Remove 'options' key if present to avoid TypeError
+                kwargs.pop("options", None)
+
                 deepgram_options = PrerecordedOptions(**kwargs)
                 payload = self._prepare_audio_payload(file)
 
