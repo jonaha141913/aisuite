@@ -160,9 +160,7 @@ class ParamValidator:
         """
         self.extra_param_mode = extra_param_mode
 
-    def validate_and_map(
-        self, provider_key: str, params: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def validate_and_map(self, provider_key: str, params: Dict[str, Any]) -> Dict[str, Any]:
         """
         Validate and map parameters for the given provider.
 
