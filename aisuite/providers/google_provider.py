@@ -206,8 +206,9 @@ class GoogleProvider(Provider):
 
         self.project_id = config.get("project_id") or os.getenv("GOOGLE_PROJECT_ID")
         self.location = config.get("region") or os.getenv("GOOGLE_REGION")
-        self.app_creds_path = config.get("application_credentials") or os.getenv(
-            "GOOGLE_APPLICATION_CREDENTIALS"
+        self.app_creds_path = (
+            config.get("application_credentials")
+            or os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
         )
 
         if not self.project_id or not self.location or not self.app_creds_path:
