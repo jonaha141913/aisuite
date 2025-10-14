@@ -213,7 +213,8 @@ class GoogleProvider(Provider):
         if not self.project_id or not self.location or not self.app_creds_path:
             raise EnvironmentError(
                 "Missing one or more required Google environment variables: "
-                "GOOGLE_PROJECT_ID, GOOGLE_REGION, GOOGLE_APPLICATION_CREDENTIALS. "
+                "GOOGLE_PROJECT_ID, GOOGLE_REGION, GOOGLE_APPLICATION_CREDENTIALS."
+            )
                 "Please refer to the setup guide: /guides/google.md."
             )
 
