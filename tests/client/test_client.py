@@ -213,6 +213,8 @@ class TestClientASR:
         assert isinstance(result, TranscriptionResult)
         assert result.text == "Hello, this is a test transcription."
         mock_provider.audio.transcriptions.create.assert_called_once()
+        call_kwargs = mock_provider.audio.transcriptions.create.call_args[1]
+        assert "language" in call_kwargs
 
     @patch("aisuite.provider.ProviderFactory.create_provider")
     def test_transcriptions_create_deepgram(
@@ -241,6 +243,8 @@ class TestClientASR:
         assert isinstance(result, TranscriptionResult)
         assert result.text == "Deepgram transcription result."
         mock_provider.audio.transcriptions.create.assert_called_once()
+        call_kwargs = mock_provider.audio.transcriptions.create.call_args[1]
+        assert "options" not in call_kwargs
 
     def test_transcriptions_invalid_model_format(self, provider_configs):
         """Test that invalid model format raises ValueError."""
@@ -257,7 +261,7 @@ class TestClientASR:
         client = Client()
         client.configure(provider_configs)
 
-        with pytest.raises(ValueError, match="is not available"):
+        with pytest.raises(ValueError, match="Invalid provider key 'unsupported'. Supported providers:"):
             client.audio.transcriptions.create(
                 model="unsupported:model", file="test.wav", language="en"
             )

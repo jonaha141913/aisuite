@@ -350,7 +350,7 @@ class Transcriptions:
         supported_providers = ProviderFactory.get_supported_providers()
         if provider_key not in supported_providers:
             raise ValueError(
-                f"Invalid provider key '{provider_key}'. "
+                f"Provider '{provider_key}' is not available. "
                 f"Supported providers: {supported_providers}"
             )
 
@@ -358,6 +358,8 @@ class Transcriptions:
         validated_params = self.client.param_validator.validate_and_map(
             provider_key, kwargs
         )
+        validated_params.pop("options", None)
+        validated_params.setdefault("language", kwargs.get("language"))
 
         # Initialize provider if not already initialized
         if provider_key not in self.client.providers:
