@@ -46,9 +46,7 @@ class GoogleMessageConverter:
         """Convert assistant messages to Google Vertex AI format."""
         if "tool_calls" in message and message["tool_calls"]:
             # Handle function calls
-            tool_call = message["tool_calls"][
-                0
-            ]  # Assuming single function call for now
+            tool_call = message["tool_calls"][0]  # Assuming single function call for now
             function_call = tool_call["function"]
 
             # Create a Part from the function call
