@@ -304,8 +304,6 @@ class TestToolsMCPSchema(unittest.TestCase):
         }
 
         # Create a copy to verify immutability
-        import copy
-
         schema_copy = copy.deepcopy(original_schema)
 
         tool = MockMCPToolWrapper("immutable_tool", "Test immutability", original_schema)

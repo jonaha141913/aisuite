@@ -5,12 +5,15 @@ import json
 from docstring_parser import parse
 
 
+
 class Tools:
     def __init__(self, tools: list[Callable] = None):
         self._tools = {}
         if tools:
             for tool in tools:
                 self._add_tool(tool)
+
+
 
     # Add a tool function with or without a Pydantic model.
     def _add_tool(self, func: Callable, param_model: Optional[Type[BaseModel]] = None):
@@ -32,12 +35,16 @@ class Tools:
             "spec": tool_spec,
         }
 
+
+
     # Return tools in the specified format (default OpenAI).
     def tools(self, format="openai") -> list:
         """Return tools in the specified format (default OpenAI)."""
         if format == "openai":
             return self.__convert_to_openai_format()
         return [tool["spec"] for tool in self._tools.values()]
+
+
 
     def _unwrap_optional(self, field_type: Type) -> tuple[Type, bool]:
         """
@@ -57,6 +64,8 @@ class Tools:
                 if len(non_none_types) == 1:
                     return non_none_types[0], True
         return field_type, False
+
+
 
     # Convert the function and its Pydantic model to a unified tool specification.
     def _convert_to_tool_spec(
@@ -113,6 +122,8 @@ class Tools:
             },
         }
 
+
+
     def __extract_param_descriptions(self, func: Callable) -> dict[str, str]:
         """Extract parameter descriptions from function docstring.
 
@@ -130,6 +141,8 @@ class Tools:
             param_descriptions[param.arg_name] = param.description or ""
 
         return param_descriptions
+
+
 
     def _convert_mcp_schema_to_tool_spec(self, func: Callable) -> Dict[str, Any]:
         """
@@ -149,8 +162,10 @@ class Tools:
         return {
             "name": func.__name__,
             "description": func.__doc__ or "",
-            "parameters": input_schema  # Use original schema directly!
+            "parameters": input_schema,  # Use original schema directly!
         }
+
+
 
     def _create_pydantic_model_from_mcp_schema(
         self, func: Callable
@@ -189,6 +204,8 @@ class Tools:
                 )
 
         return create_model(f"{func.__name__.capitalize()}Params", **fields)
+
+
 
     def __infer_from_signature(
         self, func: Callable
@@ -239,12 +256,16 @@ class Tools:
 
         return tool_spec, param_model
 
+
+
     def __convert_to_openai_format(self) -> list:
         """Convert tools to OpenAI's format."""
         return [
             {"type": "function", "function": tool["spec"]}
             for tool in self._tools.values()
         ]
+
+
 
     def results_to_messages(self, results: list, message: any) -> list:
         """Converts results to messages."""
@@ -269,6 +290,8 @@ class Tools:
                     break
 
         return messages
+
+
 
     def execute(self, tool_calls) -> list:
         """Executes registered tools based on the tool calls from the model.
@@ -314,6 +337,8 @@ class Tools:
                 raise ValueError(f"Error in tool '{tool_name}' parameters: {e}")
 
         return results
+
+
 
     def execute_tool(self, tool_calls) -> tuple[list, list]:
         """Executes registered tools based on the tool calls from the model.
@@ -370,3 +395,5 @@ class Tools:
                 raise ValueError(f"Error in tool '{tool_name}' parameters: {e}")
 
         return results, messages
+
+
