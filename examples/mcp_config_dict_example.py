@@ -154,7 +154,7 @@ print("Example 5: When to Use Config Dict vs MCPClient")
 print("=" * 70)
 
 print(
-    """
+    """\
 Use Config Dict When:
 ✓ Quick prototypes and simple scripts
 ✓ One-off tool usage
@@ -181,7 +181,7 @@ mcp = MCPClient(
 )
 
 # Inspect available tools
-print(f"\\nAvailable tools: {[t['name'] for t in mcp.list_tools()]}")
+print(f"\nAvailable tools: {[t['name'] for t in mcp.list_tools()]}")
 
 # Reuse across multiple requests
 for query in ["List files", "Count files", "Check if README exists"]:
@@ -191,7 +191,7 @@ for query in ["List files", "Count files", "Check if README exists"]:
         tools=mcp.get_callable_tools(),
         max_turns=2,
     )
-    print(f"\\n{query}: {response.choices[0].message.content[:100]}...")
+    print(f"\n{query}: {response.choices[0].message.content[:100]}...")
 
 mcp.close()
 

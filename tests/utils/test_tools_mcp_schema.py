@@ -69,7 +69,9 @@ class TestToolsMCPSchema(unittest.TestCase):
         }
 
         tool = MockMCPToolWrapper(
-            "create_entities", "Create multiple entities", input_schema
+            "create_entities",
+            "Create multiple entities",
+            input_schema,
         )
         self.tool_manager._add_tool(tool)
 
@@ -202,7 +204,11 @@ class TestToolsMCPSchema(unittest.TestCase):
             "required": ["status"],
         }
 
-        tool = MockMCPToolWrapper("advanced_schema", "Tool with advanced schema", input_schema)
+        tool = MockMCPToolWrapper(
+            "advanced_schema",
+            "Tool with advanced schema",
+            input_schema,
+        )
         self.tool_manager._add_tool(tool)
 
         tools = self.tool_manager.tools()

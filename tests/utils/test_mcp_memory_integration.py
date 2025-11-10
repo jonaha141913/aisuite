@@ -27,25 +27,25 @@ class MockMemoryMCPTool:
                         "properties": {
                             "name": {
                                 "type": "string",
-                                "description": "The name of the entity"
+                                "description": "The name of the entity",
                             },
                             "entityType": {
                                 "type": "string",
-                                "description": "The type of the entity"
+                                "description": "The type of the entity",
                             },
                             "observations": {
                                 "type": "array",
                                 "description": "An array of observation contents",
                                 "items": {
-                                    "type": "string"
-                                }
-                            }
+                                    "type": "string",
+                                },
+                            },
                         },
-                        "required": ["name", "entityType", "observations"]
-                    }
-                }
+                        "required": ["name", "entityType", "observations"],
+                    },
+                },
             },
-            "required": ["entities"]
+            "required": ["entities"],
         }
 
     def __call__(self, **kwargs):
@@ -125,16 +125,16 @@ class TestMCPMemoryIntegration(unittest.TestCase):
                         {
                             "name": "MCP",
                             "entityType": "Protocol",
-                            "observations": ["Enables LLM tool calling", "Uses JSON Schema"]
+                            "observations": ["Enables LLM tool calling", "Uses JSON Schema"],
                         },
                         {
                             "name": "aisuite",
                             "entityType": "Library",
-                            "observations": ["Unified API", "Multi-provider support"]
-                        }
-                    ]
-                }
-            }
+                            "observations": ["Unified API", "Multi-provider support"],
+                        },
+                    ],
+                },
+            },
         }
 
         # This should execute successfully

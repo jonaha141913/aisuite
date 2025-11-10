@@ -264,7 +264,7 @@ class Tools:
                             "name": result["name"],
                             "content": json.dumps(result["content"]),
                             "tool_call_id": tool_call.id,
-                        }
+                        },
                     )
                     break
 
