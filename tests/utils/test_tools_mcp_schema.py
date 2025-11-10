@@ -1,5 +1,6 @@
 import unittest
-from typing import Dict, Any, List
+from typing import Any, Dict, List
+
 from aisuite.utils.tools import Tools
 
 
@@ -77,10 +78,13 @@ class TestToolsMCPSchema(unittest.TestCase):
         tool_spec = tools[0]["function"]
 
         # Verify complex array schema is preserved
-        self.assertEqual(tool_spec["parameters"]["properties"]["entities"]["type"], "array")
+        self.assertEqual(
+            tool_spec["parameters"]["properties"]["entities"]["type"], "array"
+        )
         self.assertIn("items", tool_spec["parameters"]["properties"]["entities"])
         self.assertEqual(
-            tool_spec["parameters"]["properties"]["entities"]["items"]["type"], "object"
+            tool_spec["parameters"]["properties"]["entities"]["items"]["type"],
+            "object",
         )
 
     def test_mcp_tool_with_nested_objects(self):
@@ -113,7 +117,10 @@ class TestToolsMCPSchema(unittest.TestCase):
 
         # Verify nested structure is preserved
         self.assertEqual(tool_spec["parameters"], input_schema)
-        self.assertIn("address", tool_spec["parameters"]["properties"]["user"]["properties"])
+        self.assertIn(
+            "address",
+            tool_spec["parameters"]["properties"]["user"]["properties"],
+        )
 
     def test_mcp_tool_with_array_of_strings(self):
         """Test MCP tool with array of simple types (List[str])."""
@@ -136,9 +143,12 @@ class TestToolsMCPSchema(unittest.TestCase):
         tool_spec = tools[0]["function"]
 
         # Verify array of strings is preserved
-        self.assertEqual(tool_spec["parameters"]["properties"]["tags"]["type"], "array")
         self.assertEqual(
-            tool_spec["parameters"]["properties"]["tags"]["items"]["type"], "string"
+            tool_spec["parameters"]["properties"]["tags"]["type"], "array"
+        )
+        self.assertEqual(
+            tool_spec["parameters"]["properties"]["tags"]["items"]["type"],
+            "string",
         )
 
     def test_mcp_tool_detection(self):
@@ -217,7 +227,9 @@ class TestToolsMCPSchema(unittest.TestCase):
 
         # Verify format is preserved
         self.assertIn("format", tool_spec["parameters"]["properties"]["email"])
-        self.assertEqual(tool_spec["parameters"]["properties"]["email"]["format"], "email")
+        self.assertEqual(
+            tool_spec["parameters"]["properties"]["email"]["format"], "email"
+        )
 
         # Verify min/max are preserved
         self.assertIn("minimum", tool_spec["parameters"]["properties"]["count"])
@@ -297,7 +309,10 @@ class TestToolsMCPSchema(unittest.TestCase):
             "properties": {
                 "data": {
                     "type": "array",
-                    "items": {"type": "object", "properties": {"key": {"type": "string"}}},
+                    "items": {
+                        "type": "object",
+                        "properties": {"key": {"type": "string"}},
+                    },
                 }
             },
             "required": ["data"],
