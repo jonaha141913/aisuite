@@ -30,7 +30,7 @@ class TestToolsMCPSchema(unittest.TestCase):
             "properties": {
                 "name": {"type": "string", "description": "User name"},
                 "age": {"type": "integer", "description": "User age"},
-                "active": {"type": "boolean", "description": "Is active"},
+                "active": {"type": "boolean", "description": "Is active"}
             },
             "required": ["name"],
         }
@@ -58,7 +58,7 @@ class TestToolsMCPSchema(unittest.TestCase):
                         "type": "object",
                         "properties": {
                             "name": {"type": "string"},
-                            "type": {"type": "string"},
+                            "type": {"type": "string"}
                         },
                         "required": ["name", "type"],
                     },
@@ -96,7 +96,7 @@ class TestToolsMCPSchema(unittest.TestCase):
                             "type": "object",
                             "properties": {
                                 "street": {"type": "string"},
-                                "city": {"type": "string"},
+                                "city": {"type": "string"}
                             },
                         },
                     },
@@ -123,7 +123,7 @@ class TestToolsMCPSchema(unittest.TestCase):
                 "tags": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "List of tags",
+                    "description": "List of tags"
                 }
             },
             "required": ["tags"],
@@ -146,7 +146,7 @@ class TestToolsMCPSchema(unittest.TestCase):
         input_schema = {
             "type": "object",
             "properties": {"param": {"type": "string"}},
-            "required": ["param"],
+            "required": ["param"]
         }
 
         tool = MockMCPToolWrapper("mcp_tool", "An MCP tool", input_schema)
@@ -161,7 +161,7 @@ class TestToolsMCPSchema(unittest.TestCase):
             "type": "object",
             "properties": {
                 "required_param": {"type": "string", "description": "Required parameter"},
-                "optional_param": {"type": "integer", "description": "Optional parameter"},
+                "optional_param": {"type": "integer", "description": "Optional parameter"}
             },
             "required": ["required_param"],
         }
@@ -196,8 +196,8 @@ class TestToolsMCPSchema(unittest.TestCase):
                     "type": "integer",
                     "minimum": 0,
                     "maximum": 100,
-                    "description": "Count value",
-                },
+                    "description": "Count value"
+                }
             },
             "required": ["status"],
         }
@@ -229,7 +229,7 @@ class TestToolsMCPSchema(unittest.TestCase):
             "type": "object",
             "properties": {
                 "name": {"type": "string", "description": "Name"},
-                "count": {"type": "integer", "description": "Count"},
+                "count": {"type": "integer", "description": "Count"}
             },
             "required": ["name"],
         }

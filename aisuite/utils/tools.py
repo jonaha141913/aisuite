@@ -149,7 +149,7 @@ class Tools:
         return {
             "name": func.__name__,
             "description": func.__doc__ or "",
-            "parameters": input_schema  # Use original schema directly!
+            "parameters": input_schema,  # Use original schema directly!
         }
 
     def _create_pydantic_model_from_mcp_schema(
@@ -181,7 +181,10 @@ class Tools:
             description = param_schema.get("description", "")
 
             if param_name in required:
-                fields[param_name] = (param_type, Field(..., description=description))
+                fields[param_name] = (
+                    param_type,
+                    Field(..., description=description),
+                )
             else:
                 fields[param_name] = (
                     param_type,
@@ -220,7 +223,10 @@ class Tools:
             description = param_descriptions.get(param_name, "")
 
             if param.default == inspect._empty:
-                fields[param_name] = (param_type, Field(..., description=description))
+                fields[param_name] = (
+                    param_type,
+                    Field(..., description=description),
+                )
                 required_fields.append(param_name)
             else:
                 fields[param_name] = (
@@ -264,7 +270,7 @@ class Tools:
                             "name": result["name"],
                             "content": json.dumps(result["content"]),
                             "tool_call_id": tool_call.id,
-                        }
+                        },
                     )
                     break
 
@@ -364,7 +370,7 @@ class Tools:
                         "name": tool_name,
                         "content": json.dumps(result),
                         "tool_call_id": tool_call_id,
-                    }
+                    },
                 )
             except ValidationError as e:
                 raise ValueError(f"Error in tool '{tool_name}' parameters: {e}")
